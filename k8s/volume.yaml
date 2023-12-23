@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: mypod
+  labels: 
+    sang: ghe 
+spec: 
+  containers: 
+    - name: mycon 
+      image: alpine 
+      volumeMounts: 
+        - name: myvol 
+          mountPath: var/lib/mysql 
+          readOnly: false 
+  volumes: 
+    - emptyDir: 
+        sizeLimit: 100Mi

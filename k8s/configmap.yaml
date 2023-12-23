@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: myconfig 
+  labels: 
+    sang: ghe
+data: 
+  sangamesh: gheware
+  sangamesh1: gheware1
+  sangamesh2: gheware2
+  sangamesh3: gheware3 
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: mypod
+  labels: 
+    sang: ghe 
+spec: 
+  containers: 
+    - name: mycon 
+      image: alpine
+      envFrom: 
+        - configMapRef: 
+            name: myconfig
+            optional: false
+      args:
+        - sleep
+        - 1d
+
+
+#----------------------------------
+#using only env one env seperatly 
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: myconfig 
+  labels: 
+    sang: ghe
+data: 
+  sangamesh: gheware
+  sangamesh1: gheware1
+  sangamesh2: gheware2
+  sangamesh3: gheware3 
+---
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: mypod
+  labels: 
+    sang: ghe 
+spec: 
+  containers: 
+    - name: mycon 
+      image: alpine
+      env: 
+        - name: SANGAMESH
+          valueFrom: 
+            configMapKeyRef: 
+              key: sangamesh
+              name: myconfig
+        - name: SANGAMESH1
+          valueFrom: 
+            configMapKeyRef: 
+              key: sangamesh1
+              name: myconfig
+      
+      args:
+        - sleep
+        - 1d
+
+
+
+
+#----------------------------------
+#you can also define config map in volume 
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: my-image
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config
+  volumes:
+  - name: config-volume
+    configMap:
+      name: my-config
+
+
+

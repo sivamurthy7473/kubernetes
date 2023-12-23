@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata: 
+  annotations: 
+    kubernetes.io/change-cause: "update to latest"
+  name: mydemon 
+  labels: 
+    sang: sangmesh 
+spec: 
+  selector: 
+    matchLabels: 
+      app: fluentd
+  template: 
+    metadata: 
+      name: mypod 
+      labels: 
+        app: fluentd
+    spec: 
+      containers: 
+        - name: mycon 
+          image: fluentd:latest
+          
+    

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeselector
+  labels:
+    app: nginx
+    purpose: nodeselector
+spec:
+  nodeSelector:
+    purpose: testing #node should have this label 
+  containers:
+    - name: jenkins
+      image: jenkins/jenkins:jdk11
+      ports:
+        - containerPort: 8080

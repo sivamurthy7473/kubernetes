@@ -1,0 +1,62 @@
+---
+#restart always is default policy
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: always
+spec:
+  restartPolicy: Always
+  containers:
+    - name: alpine
+      image: alpine
+      args:
+        - sleep
+        - 3s
+
+--------------------
+
+restart never 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: never
+spec:
+  restartPolicy: Never
+  containers:
+    - name: alpine
+      image: alpine
+      args:
+        - sleep
+        - 3s
+
+--------------------
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: restartfailure
+spec:
+  restartPolicy: OnFailure
+  containers:
+    - name: failure
+      image: alpine
+      args:
+        - sleep
+        - 3SM
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: restartfailure2
+spec:
+  restartPolicy: OnFailure
+  containers:
+    - name: success
+      image: alpine
+      args:
+        - sleep
+        - 3s
+

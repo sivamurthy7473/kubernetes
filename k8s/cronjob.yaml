@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata: 
+  name: mycronjob
+spec:
+  schedule: '* * * * *'
+  jobTemplate:
+    metadata:
+      name: myjob
+    spec:
+      template: 
+        metadata:
+          name: mypod
+        spec:
+          activeDeadlineSeconds: 5
+          restartPolicy: OnFailure
+          containers:
+            - name: mycon
+              image: alpine
+              command:
+                - sleep
+                - 10s
+              
